@@ -42,7 +42,13 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/admin/**").hasAnyRole("ADMIN").antMatchers("/user/**").hasRole("USER")
-				.antMatchers("/**").permitAll().and().formLogin().and().csrf().disable();
+				.antMatchers("/**").permitAll().and().formLogin().loginPage("/login")
+				.loginProcessingUrl("/process-login")
+				/*
+				 * here the Url provided in the loginProcessingUrl should must be the  same as is
+				 * provided in the action attribute of the login form
+				 */
+				.defaultSuccessUrl("/user/dashboard").and().csrf().disable();
 
 	}
 

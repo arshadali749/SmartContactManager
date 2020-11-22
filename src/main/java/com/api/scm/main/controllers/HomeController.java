@@ -41,8 +41,15 @@ public class HomeController {
 		return "signup";
 	}
 
-	@RequestMapping("/signin")
+	@RequestMapping("/login") 
 	public String getLoginPage(Model model) { 
+		model.addAttribute("title", "login.html");
+		return "login";
+	} 
+	
+	
+	@RequestMapping("/logout") 
+	public String logout(Model model) { 
 		model.addAttribute("title", "login.html");
 		return "login";
 	} 
