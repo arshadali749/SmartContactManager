@@ -19,29 +19,11 @@ import com.api.scm.main.utils.ResponseMessage;
 public class UserController {
 	@Autowired
 	private UserRepo userRepo;
-
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String saveUser(@ModelAttribute("user") User user,
-			@RequestParam(value = "agreement", defaultValue = "false") boolean agreement, Model model,
-			HttpSession session) {
-		try {
-			if (!agreement) {
-				throw new Exception("you have not agreed with the terms and conditions");
-
-			}
-			user.setImageURL("profile-user.png");
-			user.setRole("ROLE_USER");
-			user.setEnabled(true);
-			User result = userRepo.save(user);
-			model.addAttribute("user", new User());
-			session.setAttribute("message", new ResponseMessage("Sucessfully Registered!!", "alert-success"));
-			return "login";
-
-		} catch (Exception e) {
-			model.addAttribute("user", user);
-			session.setAttribute("message",
-					new ResponseMessage("Something went wrong" + e.getMessage(), "alert-danger"));
-		}
-		return "signup";
+	
+	@RequestMapping("/dashboard")
+	public String getDashBoard()
+	{
+		return"dash-board";
 	}
+
 }

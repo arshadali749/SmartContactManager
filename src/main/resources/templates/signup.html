@@ -21,7 +21,7 @@
 							<p class="text-center" th:text="${session.message.content}"></p>
 							<th:blobk th:text="${#session.removeAttribute('message')}"></th:blobk>
 						</div>
-						<form class="" th:action="@{/user/register}" method="post"
+						<form class="" th:action="@{/register}" method="post"
 							th:object="${user}">
 
 
