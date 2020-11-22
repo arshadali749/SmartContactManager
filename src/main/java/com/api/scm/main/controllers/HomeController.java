@@ -3,7 +3,8 @@ package com.api.scm.main.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.api.scm.main.entities.User;
 
 @Controller
 public class HomeController {
@@ -23,6 +24,7 @@ public class HomeController {
 	@RequestMapping("/signup")
 	public String getSignUpPage(Model model) {
 		model.addAttribute("title","signup.html");
+		model.addAttribute("user",new User());
 		return "signup";
 	}
 	
