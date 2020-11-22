@@ -23,7 +23,7 @@ public class UserController {
 	@RequestMapping("/dashboard")
 	public String getDashBoard()
 	{
-		return"dash-board";
+		return"/normaluserpages/dash-board";
 	}
 
 }

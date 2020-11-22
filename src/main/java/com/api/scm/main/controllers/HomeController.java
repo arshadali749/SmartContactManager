@@ -3,6 +3,7 @@ package com.api.scm.main.controllers;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,6 +19,8 @@ import com.api.scm.main.utils.ResponseMessage;
 public class HomeController {
 	@Autowired
 	private UserRepo userRepo;
+	@Autowired
+	private BCryptPasswordEncoder encoder;
 
 	@RequestMapping("/")
 	public String getHomePage(Model model) {
@@ -38,11 +41,11 @@ public class HomeController {
 		return "signup";
 	}
 
-	@RequestMapping("/login")
-	public String getLoginPage(Model model) {
+	@RequestMapping("/signin")
+	public String getLoginPage(Model model) { 
 		model.addAttribute("title", "login.html");
 		return "login";
-	}
+	} 
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String saveUser(@ModelAttribute("user") User user,
@@ -53,6 +56,7 @@ public class HomeController {
 				throw new Exception("you have not agreed with the terms and conditions");
 
 			}
+			user.setPassword(encoder.encode(user.getPassword()));
 			user.setImageURL("profile-user.png");
 			user.setRole("ROLE_USER");
 			user.setEnabled(true);
@@ -63,9 +67,8 @@ public class HomeController {
 
 		} catch (Exception e) {
 			model.addAttribute("user", user);
-			session.setAttribute("message",
-					new ResponseMessage("e.getMessage()", "alert-danger"));
-		}
+			session.setAttribute("message", new ResponseMessage("e.getMessage()", "alert-danger"));
+		} 
 		return "signup";
 	}
 
