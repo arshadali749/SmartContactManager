@@ -13,6 +13,11 @@
 	integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
 	crossorigin="anonymous">
 
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+	integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+	crossorigin="anonymous" />
+
 <link rel="stylesheet" th:href="@{/css/style.css}">
 <title th:text="${title}">Hello, world!</title>
 </head>
@@ -41,9 +46,27 @@
 			</ul>
 		</div>
 	</nav>
-
+	<!-- SIDEBAR AREA STARTS HERE  -->
+	<div class="sidebar">
+		<i onclick="toggleSideBar()" class="fas fa-bars m-3"></i> <a href="#"
+			class="item"> <i class="fas fa-home"></i>HOME
+		</a> <a href="#" class="item"> <i class="fas fa-id-card-alt"></i>VIEW
+			CONTACTS
+		</a> <a href="#" class="item"> <i class="fas fa-pencil-alt"></i>ADD
+			CONTACT
+		</a> <a href="#" class="item"> <i class="fas fa-user-circle"></i>YOUR
+			PROFILE
+		</a> <a href="#" class="item"> <i class="fas fa-cogs"></i>SETTINGS
+		</a> <a href="#" class="item"> <i class="fas fa-sign-out-alt"></i>LOGOUT
+		</a>
+	</div>
+	<!-- CONTETNT AREA STARTS FROM HERE -->
+	<div class="content">
+		<i onclick="toggleSideBar()" class="fas fa-bars m-3"></i>
+		<div th:replace="${content}"></div>
+	</div>
 	<!-- END OF NAVEBAR -->
-	<div th:replace="${content}"></div>
+
 
 	<!-- Optional JavaScript; choose one of the two! -->
 
@@ -58,7 +81,7 @@
 
 
 	<!-- my custom scripts -->
-	<script type="text/javascript" th:src="@{js/script.js}"></script>
+	<script type="text/javascript" th:src="@{../js/script.js}"></script>
 
 	<!-- Option 2: jQuery, Popper.js, and Bootstrap JS
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

@@ -25,7 +25,6 @@ body {
 	height: 50px;
 }
 
-
 #login .container #login-row #login-column #login-box {
 	margin-top: 50px;
 	max-width: 600px;
@@ -42,3 +41,61 @@ body {
 	{
 	margin-top: -85px;
 }
+
+
+
+
+
+/*sidebar css starts here*/
+.sidebar {
+	width: 20%;
+	background: white;
+	height: 100%;
+	position: fixed;
+	padding-top: 30px;
+}
+
+.sidebar a {
+	display: block;
+	width: 100%;
+	padding: 10px 25px;
+	text-decoration: none;
+	color: gray;
+}
+
+.sidebar a:hover {
+	background: #e2e2e2
+}
+
+@media
+only
+screen
+and
+(max-width:600px)
+{
+.sidebar {
+	display: none width:80% !important;
+	background: white; 
+	height: 100vh;
+	position: fixed;
+	padding-top: 20px;
+}
+
+.content {
+	margin-left: 0% !important
+}
+
+}
+.content {
+	margin-left: 20%;
+}
+
+.sidebar .sidebarclosebtn{
+	
+	position: absolute;
+	top: 0;
+	right: 35px;
+	font-size: 50px;
+	cursor: pointer;
+	}
+	
