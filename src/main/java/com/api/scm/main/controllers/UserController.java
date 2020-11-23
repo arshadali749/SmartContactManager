@@ -1,29 +1,31 @@
 package com.api.scm.main.controllers;
 
-import javax.servlet.http.HttpSession;
+import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.api.scm.main.entities.User;
-import com.api.scm.main.repos.UserRepo;
-import com.api.scm.main.utils.ResponseMessage;
+import com.api.scm.main.services.UserService;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 	@Autowired
-	private UserRepo userRepo;
-	
+	private UserService userservice;
+
 	@RequestMapping("/dashboard")
-	public String getDashBoard()
+	public String getDashBoard(Model model, Principal principal)
+
 	{
-		return"/normaluserpages/dash-board";
+		String CurrentUserName = principal.getName();
+		System.out.println("User:" + CurrentUserName);
+		User currentUser = userservice.getUserByUserName(CurrentUserName);
+		System.out.println("CURRENT USER:" + currentUser);
+		model.addAttribute("user",currentUser);
+		return "/normaluserpages/dash-board";
 	}
 
 }
