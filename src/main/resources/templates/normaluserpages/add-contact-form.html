@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http;//www.thymeleaf.org"
+	th:replace="/normaluserpages/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>title here</title>
+</head>
+<body>
+	<section>
+		<div class="card mr-3 ml-3 col-md-10 offset-md-1">
+			<div class="card-body text-center">
+				<h1>ADD NEW CONTACT</h1>
+				<div class="row">
+					<div class="col-md-8 offset-md-2">
+						<form action="#" th:object=" ${contact}"
+							ecntype="multipart/form-data" method="POST"
+							th:action="@{/contacts/add}" class="mt-2">
+							<!-- ------------------------------------------------ -->
+
+							<div class="input-group mt-3">
+								<div class="input-group-prepend">
+									<div class="input-group-text">
+										<i class="fa fa-plus"></i>
+									</div>
+								</div>
+								<input type="text" id="name" name="firstName"
+									placeholder="Enter first name here " class="form-control">
+							</div>
+
+							<!-------------------------------------------------- -->
+
+							<div class="input-group mt-3">
+								<div class="input-group-prepend">
+									<div class="input-group-text">
+										<i class="fas fa-user-alt"></i>
+									</div>
+								</div>
+								<input type="text" id="name" name="secondName"
+									placeholder="Enter second name here " class="form-control">
+							</div>
+							<!-------------------------------------------------- -->
+
+
+							<div class="input-group mt-3">
+								<div class="input-group-prepend">
+									<div class="input-group-text">
+										<i class="fa fa-phone"></i>
+									</div>
+								</div>
+								<input type="number" id="name" name="phone"
+									placeholder="Enter phone here name here " class="form-control">
+							</div>
+							<!-- ------------------------------------------------ -->
+
+
+							<div class="input-group mt-3">
+								<div class="input-group-prepend">
+									<div class="input-group-text">@</div>
+								</div>
+								<input type="email" id="name" name="email"
+									placeholder="Enter email name here " class="form-control">
+							</div>
+							<!-- ------------------------------------------------ -->
+
+
+							<div class="input-group mt-3">
+								<div class="input-group-prepend">
+									<div class="input-group-text">
+										<i class="fa fa-plus"></i>
+									</div>
+								</div>
+								<input type="text" id="name" name="type"
+									placeholder="Enter type  here e.g home,company,frieds,personal "
+									class="form-control">
+							</div>
+							<!-- ------------------------------------------------ -->
+
+
+							<div class="input-group mt-3">
+								<textarea rows="2" class="form-control" name="description"
+									placeholder="Enter some description here............"></textarea>
+							</div>
+							<!-- ------------------------------------------------ -->
+
+							<div class="image-file">
+								<input type="file" name="imageFile" class="form-control mt-1"
+									style="padding: 1px 1px">
+							</div>
+
+							<!-- ------------------------------------------------ -->
+							<div class="container text-center">
+
+								<input type="submit" class="btn btn-success mt-1">
+								<button type="reset" class="btn btn-danger mt-1" value="RESET">RESET</button>
+
+
+							</div>
+
+						</form>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+</body>
+</html>

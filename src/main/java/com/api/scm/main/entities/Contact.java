@@ -14,7 +14,7 @@ public class Contact {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	private String name;
+	private String firstName;
 	private String secondName;
 	private String type;
 	private String email;
@@ -33,13 +33,7 @@ public class Contact {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+	
 
 	public String getSecondName() {
 		return secondName;
@@ -87,6 +81,22 @@ public class Contact {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	

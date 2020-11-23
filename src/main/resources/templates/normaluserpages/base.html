@@ -24,7 +24,7 @@
 <body>
 
 	<!-- NAVEBAR STARTS HERE -->
-	<nav class="navbar navbar-expand-lg navbar-dark  bg-primary">
+	<nav class="navbar  fixed-top navbar-expand-lg navbar-dark  bg-primary">
 		<a class="navbar-brand" href="#">Smart Contact Manager</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarSupportedContent"
@@ -47,21 +47,22 @@
 		</div>
 	</nav>
 	<!-- SIDEBAR AREA STARTS HERE  -->
-	<div class="sidebar">
+	<div class="sidebar mt-3">
 		<i onclick="toggleSideBar()" class="fas fa-bars m-3"></i> <a href="#"
 			class="item"> <i class="fas fa-home"></i>HOME
 		</a> <a href="#" class="item"> <i class="fas fa-id-card-alt"></i>VIEW
 			CONTACTS
-		</a> <a href="#" class="item"> <i class="fas fa-pencil-alt"></i>ADD
-			CONTACT
+		</a> <a href="#" class="item" th:href="@{/contacts/new}"> <i
+			class="fas fa-pencil-alt"></i>ADD CONTACT
 		</a> <a href="#" class="item"> <i class="fas fa-user-circle"></i>YOUR
 			PROFILE
 		</a> <a href="#" class="item"> <i class="fas fa-cogs"></i>SETTINGS
-		</a> <a href="#" class="item"> <i class="fas fa-sign-out-alt"></i>LOGOUT
+		</a> <a href="#" th:href="@{/logout}" class="item"> <i
+			class="fas fa-sign-out-alt"></i>LOGOUT
 		</a>
 	</div>
 	<!-- CONTETNT AREA STARTS FROM HERE -->
-	<div class="content">
+	<div class="content mt-5">
 		<i onclick="toggleSideBar()" class="fas fa-bars m-3"></i>
 		<div th:replace="${content}"></div>
 	</div>
