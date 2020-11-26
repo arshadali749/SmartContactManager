@@ -3,6 +3,7 @@ package com.api.scm.main.controllers;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,6 +15,8 @@ import com.api.scm.main.services.UserService;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+	@Value("${path}")
+	private  String PATH;
 	@Autowired
 	private UserService userservice;
 
