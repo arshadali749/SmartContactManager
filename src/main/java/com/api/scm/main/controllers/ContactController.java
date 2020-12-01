@@ -1,6 +1,7 @@
 package com.api.scm.main.controllers;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -39,6 +40,16 @@ public class ContactController {
 		User currentUser = userService.getUserByUserName(CurrentUserName);
 		model.addAttribute("user", currentUser);
 
+	}
+
+	@GetMapping("/list")
+	public String showContactsList(Model model, Principal principal) {
+		model.addAttribute("title", "contacts list");
+		// List<Contact> contacts =
+		// contactService.getContactsList(helper.getCurrentActiveUser(principal));
+		List<Contact> contacts = contactService.getContactsList(helper.getCurrentActiveUser(principal));
+		model.addAttribute("contacts", contacts);
+		return "normaluserpages/contacts";
 	}
 
 	@GetMapping("/new")

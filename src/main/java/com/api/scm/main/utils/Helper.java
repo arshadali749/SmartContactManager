@@ -39,7 +39,7 @@ public class Helper {
 
 	}
     
-	public User getCurrentActiveUser(Principal principal) {
+	public  User getCurrentActiveUser(Principal principal) {
 		return userService.getUserByUserName(principal.getName());
 	}
 }
