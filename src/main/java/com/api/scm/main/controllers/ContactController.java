@@ -1,15 +1,10 @@
 package com.api.scm.main.controllers;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +19,7 @@ import com.api.scm.main.entities.User;
 import com.api.scm.main.services.ContactService;
 import com.api.scm.main.services.UserService;
 import com.api.scm.main.utils.Helper;
-import com.sun.xml.bind.api.impl.NameConverter.Standard;
+import com.api.scm.main.utils.ResponseMessage;
 
 @Controller
 @RequestMapping("/contacts/")
@@ -54,7 +49,7 @@ public class ContactController {
 
 	@PostMapping("/add")
 	public String addNewContact(@ModelAttribute Contact contact, @RequestParam("imageFile") MultipartFile file,
-			Model model, Principal principal) {
+			Model model, Principal principal, HttpSession session) {
 
 		try {
 			// User user = userService.getUserByUserName(principal.getName());
@@ -68,13 +63,17 @@ public class ContactController {
 				helper.uploadFile(file);
 				contact.setImageURL(file.getOriginalFilename());
 				System.out.println("IMAGE UPLOADED SUCCESSFULLY");
+				contactService.saveContact(contact);
+				session.setAttribute("message",
+						new ResponseMessage("Your contact has been added successfully..", "success"));
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			session.setAttribute("message", new ResponseMessage("Sorry something went wrong...!!!", "danger"));
 
 		}
-		contactService.saveContact(contact);
+
 		return "normaluserpages/add-contact-form";
 	}
 

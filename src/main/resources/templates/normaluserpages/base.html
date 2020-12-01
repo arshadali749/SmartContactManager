@@ -61,9 +61,17 @@
 			class="fas fa-sign-out-alt"></i>LOGOUT
 		</a>
 	</div>
+
 	<!-- CONTETNT AREA STARTS FROM HERE -->
 	<div class="content mt-5">
 		<i onclick="toggleSideBar()" class="fas fa-bars m-3"></i>
+		<!-- MESSAGE AREA -->
+		<div th:if="${session.message}" class="col col-md-8 container">
+			<div  th:classappend="${'alert-'+session.message.type}" class="text-center" role="alert">
+				<span th:text="${session.message.content}"></span>
+			</div>
+			<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+		</div>
 		<div th:replace="${content}"></div>
 	</div>
 	<!-- END OF NAVEBAR -->
