@@ -1,15 +1,18 @@
 package com.api.scm.main.controllers;
 
 import java.security.Principal;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,13 +45,14 @@ public class ContactController {
 
 	}
 
-	@GetMapping("/list")
-	public String showContactsList(Model model, Principal principal) {
+	@GetMapping("/list/{page}") // here page represents the current page
+	public String showContactsList(@PathVariable int page, Model model, Principal principal) {
 		model.addAttribute("title", "contacts list");
-		// List<Contact> contacts =
-		// contactService.getContactsList(helper.getCurrentActiveUser(principal));
-		List<Contact> contacts = contactService.getContactsList(helper.getCurrentActiveUser(principal));
+		Pageable pageable = PageRequest.of(page, 6);
+		Page<Contact> contacts = contactService.getContactsList(helper.getCurrentActiveUser(principal), pageable);
 		model.addAttribute("contacts", contacts);
+		model.addAttribute("currentpage", page);
+		model.addAttribute("totalpages", contacts.getTotalPages());
 		return "normaluserpages/contacts";
 	}
 
@@ -85,7 +89,7 @@ public class ContactController {
 
 		}
 
-		return "normaluserpages/add-contact-form";
+		return "redirect:/contacts/list/0";
 	}
 
 }
