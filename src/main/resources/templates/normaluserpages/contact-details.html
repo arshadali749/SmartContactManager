@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http;//www.thymeleaf.org"
+	th:replace="normaluserpages/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>title here</title>
+</head>
+<body>
+	<section>
+
+		<!-- this  div will be executed when the contact trying to access one of its own contacts-->
+		<div class="card mr-3 ml-3" th:if="${contact}">
+			<div class="card-body text-center">
+				<img alt="" class="profile-img-in-description"
+					th:src="@{'/images/'+${contact.imageURL}}">
+
+				<table class="table mt-2">
+					<tbody>
+						<tr>
+							<th>ID</th>
+							<td th:text="${contact.id}"></td>
+						</tr>
+						<tr>
+							<th>FIRST NAME</th>
+							<td th:text="${contact.firstName}"></td>
+						</tr>
+						<tr>
+							<th>SECOND NAME</th>
+							<td th:text="${contact.secondName}"></td>
+						</tr>
+						<tr>
+							<th>PHONE</th>
+							<td th:text="${contact.phone}"></td>
+						</tr>
+						<tr>
+							<th>EMAIL</th>
+							<td th:text="${contact.email}"></td>
+						</tr>
+						<tr>
+							<td colspan="2"><textarea class="form-control"
+									readonly="readonly" rows="2" th:text="${contact.description}"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td><button class="btn btn-sm btn-danger">DELETE</button></td>
+							<td><button class="btn btn-sm btn-success">UPDATE</button></td>
+
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+
+		</div>
+
+		<!-- this  div will be executed when the user tries to access the some one else's contact by passing different id in the URL in this case the controller is not sending the contact object-->
+		<div>
+			<h1 class="text-center bg-danger mr-3 ml-3" th:unless="${contact}">YOU
+				CAN NOT SEE THIS CONTACT</h1>
+		</div>
+
+
+	</section>
+</body>
+</html>

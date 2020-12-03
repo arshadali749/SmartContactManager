@@ -1,6 +1,7 @@
 package com.api.scm.main.controllers;
 
 import java.security.Principal;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -48,7 +49,7 @@ public class ContactController {
 	@GetMapping("/list/{page}") // here page represents the current page
 	public String showContactsList(@PathVariable int page, Model model, Principal principal) {
 		model.addAttribute("title", "contacts list");
-		Pageable pageable = PageRequest.of(page, 6);
+		Pageable pageable = PageRequest.of(page, 5);
 		Page<Contact> contacts = contactService.getContactsList(helper.getCurrentActiveUser(principal), pageable);
 		model.addAttribute("contacts", contacts);
 		model.addAttribute("currentpage", page);
@@ -71,17 +72,16 @@ public class ContactController {
 			User user = helper.getCurrentActiveUser(principal);
 
 			contact.setUser(user);
-			if (file.isEmpty()) {
-				System.out.println("No imaged for the contact is selected");
-
-			} else {
+			if (!file.isEmpty()) {
 				helper.uploadFile(file);
 				contact.setImageURL(file.getOriginalFilename());
-				System.out.println("IMAGE UPLOADED SUCCESSFULLY");
-				contactService.saveContact(contact);
-				session.setAttribute("message",
-						new ResponseMessage("Your contact has been added successfully..", "success"));
 			}
+
+			contact.setImageURL("profile-user.png");
+			System.out.println("IMAGE UPLOADED SUCCESSFULLY");
+			contactService.saveContact(contact);
+			session.setAttribute("message",
+					new ResponseMessage("Your contact has been added successfully..", "success"));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -90,6 +90,21 @@ public class ContactController {
 		}
 
 		return "redirect:/contacts/list/0";
+	}
+
+	@RequestMapping("/detail/{id}")
+	public String showDetail(@PathVariable int id, Model model, Principal principal) {
+
+		Optional<Contact> contactOptional = contactService.getContactById(id);
+		Contact contact = contactOptional.get();// will give the actual contact
+		User currentActiveUser = helper.getCurrentActiveUser(principal);
+		// this line checks whether the contact that the user is trying to access
+		// belongs to him or not if yes than the contact is passes in the model
+		// otherwise not
+		if (currentActiveUser.getId() == contact.getUser().getId())
+			model.addAttribute("contact", contact);
+		return "normaluserpages/contact-details";
+
 	}
 
 }

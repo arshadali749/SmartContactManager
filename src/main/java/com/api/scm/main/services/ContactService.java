@@ -1,5 +1,7 @@
 package com.api.scm.main.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,8 +21,11 @@ public class ContactService {
 
 	}
 
-	public Page<Contact> getContactsList(User user,Pageable pageable) {
-		return contactRepo.findByUser(user,pageable);
+	public Page<Contact> getContactsList(User user, Pageable pageable) {
+		return contactRepo.findByUser(user, pageable);
 	}
 
+	public Optional<Contact> getContactById(int id) {
+		return contactRepo.findById(id);
+	}
 }

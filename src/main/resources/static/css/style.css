@@ -42,10 +42,6 @@ body {
 	margin-top: -85px;
 }
 
-
-
-
-
 /*sidebar css starts here*/
 .sidebar {
 	width: 20%;
@@ -67,35 +63,40 @@ body {
 	background: #e2e2e2
 }
 
-@media
-only
-screen
-and
-(max-width:600px)
-{
-.sidebar {
-	display: none width:80% !important;
-	background: white; 
-	height: 100vh;
-	position: fixed;
-	padding-top: 20px;
-} 
-
-.content {
-	margin-left: 0% !important
+@media only screen and (max-width:600px) {
+	.sidebar {
+		display: none width:80% !important;
+		background: white;
+		height: 100vh;
+		position: fixed;
+		padding-top: 20px;
+	}
+	.content {
+		margin-left: 0% !important
+	}
 }
 
-}
 .content {
 	margin-left: 20%;
 }
 
-.sidebar .sidebarclosebtn{
-	
+.sidebar .sidebarclosebtn {
 	position: absolute;
 	top: 0;
 	right: 35px;
 	font-size: 50px;
 	cursor: pointer;
-	}
-	
+}
+
+.profile-img {
+	width: 40px;
+	height: 40px;
+	object-fit: cover;
+	border-radius: 50%;
+}
+
+.profile-img-in-description {
+	width: 20%;
+	height: 20%;
+	border-radius: 100%;
+}
