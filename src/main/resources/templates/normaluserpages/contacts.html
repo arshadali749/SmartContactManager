@@ -34,8 +34,10 @@
 							<td><a th:href="@{'/contacts/detail/'+${c.id}}"><span
 									th:text="${c.email}"></span></a></td>
 							<td th:text="${c.phone}"></td>
-							<td><button class="btn btn-sm btn-danger">DELETE</button></td>
-							<td><button class="btn btn-sm btn-success">UPDATE</button></td>
+							<td><a  href="#" th:onclick="|deleteContact(${c.id})|"
+								class="btn btn-sm btn-danger">DELETE</a></td>
+							<td><a th:href="@{'/contacts/edit/'+{c.id}}"
+								class="btn btn-sm btn-success">UPDATE</a></td>
 
 						</tr>
 					</tbody>

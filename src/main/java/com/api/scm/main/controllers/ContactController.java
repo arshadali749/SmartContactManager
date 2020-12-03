@@ -107,4 +107,19 @@ public class ContactController {
 
 	}
 
+	@RequestMapping("/delete/{id}")
+	public String deleteContact(@PathVariable int id, Model model, Principal principal) {
+
+		Optional<Contact> contactOptional = contactService.getContactById(id);
+		Contact contact = contactOptional.get();// will give the actual contact
+		User currentActiveUser = helper.getCurrentActiveUser(principal);
+		// this line checks whether the contact that the user is trying to access
+		// belongs to him or not if yes than the contact is passes in the model
+		// otherwise not
+		if (currentActiveUser.getId() == contact.getUser().getId())
+			contactService.deleteContactById(id);
+		return "redirect:/contacts/list/0";
+
+	}
+
 }

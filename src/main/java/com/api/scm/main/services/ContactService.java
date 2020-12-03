@@ -28,4 +28,8 @@ public class ContactService {
 	public Optional<Contact> getContactById(int id) {
 		return contactRepo.findById(id);
 	}
+
+	public void deleteContactById(int id) {
+		contactRepo.deleteById(id);
+	}
 }
