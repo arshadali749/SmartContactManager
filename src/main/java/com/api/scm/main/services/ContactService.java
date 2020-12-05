@@ -127,4 +127,8 @@ public class ContactService {
 			model.addAttribute("contact", contact);
 		return contact;
 	}
+	
+	public void updateContactById(Contact id) {
+		
+	}
 }

@@ -73,6 +73,15 @@ public class ContactController {
 
 	}
 
+	// contact update handler
+	@PostMapping("/update")
+	public String updateContact(@ModelAttribute Contact contact, @RequestParam("imageFile") MultipartFile file,
+			Model model, Principal principal, HttpSession session) {
+		contactService.updateContact(contact, file, principal);
+		return "redirect:/contacts/list/0";
+
+	}
+
 	@PostMapping("/edit/{id}")
 	public String editContact(Model model, @PathVariable int id) {
 		Optional<Contact> optionalContact = contactService.getContactById(id);
@@ -80,17 +89,6 @@ public class ContactController {
 		model.addAttribute("contact", contact);
 		model.addAttribute("title", "edit contact");
 		return "normaluserpages/edit-contact-form";
-	}
-
-	// contact update handler
-	@PostMapping("/update")
-	public String updateContact(@ModelAttribute Contact contact, @RequestParam("imageFile") MultipartFile file,
-			Model model, Principal principal, HttpSession session) {
-		System.out.println("UPDATE CALLED");
-		System.out.println("COntact to be updated:" + contact);
-		contactService.updateContact(contact, file, principal);
-		return "redirect:/contacts/list/0";
-
 	}
 
 }
