@@ -13,7 +13,7 @@
 			<div class="card-body">
 				<h1 class="text-center">YOUR CONTACTS</h1>
 
-				<table class="table">
+				<table class="table table-bordered table-sm">
 					<thead>
 						<tr>
 							<th scope="col">ID</th>
@@ -34,10 +34,14 @@
 							<td><a th:href="@{'/contacts/detail/'+${c.id}}"><span
 									th:text="${c.email}"></span></a></td>
 							<td th:text="${c.phone}"></td>
-							<td><a  href="#" th:onclick="|deleteContact(${c.id})|"
+							<td><a href="#" th:onclick="|deleteContact(${c.id})|"
 								class="btn btn-sm btn-danger">DELETE</a></td>
-							<td><a th:href="@{'/contacts/edit/'+{c.id}}"
-								class="btn btn-sm btn-success">UPDATE</a></td>
+
+							<td>
+								<form  method="post"th:action="@{'/contacts/edit/'+${c.id}}">
+									<button class="btn btn-sm btn-success">EDIT</button>
+								</form>
+							</td>
 
 						</tr>
 					</tbody>

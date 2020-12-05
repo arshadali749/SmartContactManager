@@ -6,9 +6,6 @@ import java.util.Optional;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +20,6 @@ import com.api.scm.main.entities.Contact;
 import com.api.scm.main.entities.User;
 import com.api.scm.main.services.ContactService;
 import com.api.scm.main.services.UserService;
-import com.api.scm.main.utils.Helper;
-import com.api.scm.main.utils.ResponseMessage;
 
 @Controller
 @RequestMapping("/contacts/")
@@ -33,8 +28,6 @@ public class ContactController {
 	private UserService userService;
 	@Autowired
 	private ContactService contactService;
-	@Autowired
-	private Helper helper;
 
 	// this will contain the all the data which is common , all the pages can access
 	// it and will be included in the response of each in to this controller
@@ -48,12 +41,7 @@ public class ContactController {
 
 	@GetMapping("/list/{page}") // here page represents the current page
 	public String showContactsList(@PathVariable int page, Model model, Principal principal) {
-		model.addAttribute("title", "contacts list");
-		Pageable pageable = PageRequest.of(page, 5);
-		Page<Contact> contacts = contactService.getContactsList(helper.getCurrentActiveUser(principal), pageable);
-		model.addAttribute("contacts", contacts);
-		model.addAttribute("currentpage", page);
-		model.addAttribute("totalpages", contacts.getTotalPages());
+		contactService.getContactsList(model, page, principal);
 		return "normaluserpages/contacts";
 	}
 
@@ -66,58 +54,41 @@ public class ContactController {
 	@PostMapping("/add")
 	public String addNewContact(@ModelAttribute Contact contact, @RequestParam("imageFile") MultipartFile file,
 			Model model, Principal principal, HttpSession session) {
-
-		try {
-			// User user = userService.getUserByUserName(principal.getName());
-			User user = helper.getCurrentActiveUser(principal);
-
-			contact.setUser(user);
-			if (!file.isEmpty()) {
-				helper.uploadFile(file);
-				contact.setImageURL(file.getOriginalFilename());
-			}
-
-			contact.setImageURL("profile-user.png");
-			System.out.println("IMAGE UPLOADED SUCCESSFULLY");
-			contactService.saveContact(contact);
-			session.setAttribute("message",
-					new ResponseMessage("Your contact has been added successfully..", "success"));
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			session.setAttribute("message", new ResponseMessage("Sorry something went wrong...!!!", "danger"));
-
-		}
-
+		contactService.saveContact(contact, file, principal);
 		return "redirect:/contacts/list/0";
 	}
 
 	@RequestMapping("/detail/{id}")
 	public String showDetail(@PathVariable int id, Model model, Principal principal) {
 
-		Optional<Contact> contactOptional = contactService.getContactById(id);
-		Contact contact = contactOptional.get();// will give the actual contact
-		User currentActiveUser = helper.getCurrentActiveUser(principal);
-		// this line checks whether the contact that the user is trying to access
-		// belongs to him or not if yes than the contact is passes in the model
-		// otherwise not
-		if (currentActiveUser.getId() == contact.getUser().getId())
-			model.addAttribute("contact", contact);
 		return "normaluserpages/contact-details";
 
 	}
 
 	@RequestMapping("/delete/{id}")
-	public String deleteContact(@PathVariable int id, Model model, Principal principal) {
+	public String deleteContact(@PathVariable int id, Principal principal) {
 
-		Optional<Contact> contactOptional = contactService.getContactById(id);
-		Contact contact = contactOptional.get();// will give the actual contact
-		User currentActiveUser = helper.getCurrentActiveUser(principal);
-		// this line checks whether the contact that the user is trying to access
-		// belongs to him or not if yes than the contact is passes in the model
-		// otherwise not
-		if (currentActiveUser.getId() == contact.getUser().getId())
-			contactService.deleteContactById(id);
+		contactService.deleteContactById(id, principal);
+		return "redirect:/contacts/list/0";
+
+	}
+
+	@PostMapping("/edit/{id}")
+	public String editContact(Model model, @PathVariable int id) {
+		Optional<Contact> optionalContact = contactService.getContactById(id);
+		Contact contact = optionalContact.get();
+		model.addAttribute("contact", contact);
+		model.addAttribute("title", "edit contact");
+		return "normaluserpages/edit-contact-form";
+	}
+
+	// contact update handler
+	@PostMapping("/update")
+	public String updateContact(@ModelAttribute Contact contact, @RequestParam("imageFile") MultipartFile file,
+			Model model, Principal principal, HttpSession session) {
+		System.out.println("UPDATE CALLED");
+		System.out.println("COntact to be updated:" + contact);
+		contactService.updateContact(contact, file, principal);
 		return "redirect:/contacts/list/0";
 
 	}
