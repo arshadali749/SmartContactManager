@@ -32,4 +32,8 @@ public class ContactService {
 	public void deleteContactById(int id) {
 		contactRepo.deleteById(id);
 	}
+	
+	public void updateContactById(Contact id) {
+		
+	}
 }

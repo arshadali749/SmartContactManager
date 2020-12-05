@@ -122,4 +122,13 @@ public class ContactController {
 
 	}
 
+	@PostMapping("/edit/{id}")
+	public String editContact(Model model, @PathVariable int id) {
+		Optional<Contact> optionalContact = contactService.getContactById(id);
+		Contact contact = optionalContact.get();
+		model.addAttribute("contact", contact);
+		model.addAttribute("title", "edit contact");
+		return "normaluserpages/edit-contact-form";
+	}
+
 }
