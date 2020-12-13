@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http;//www.thymeleaf.org"
+	th:replace="normaluserpages/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>title here</title>
+</head>
+<body>
+	<section>
+
+		<!-- this  div will be executed when the contact trying to access one of its own contacts-->
+
+		<div class="card-body text-center mycard ml-3 mr-3">
+			<img alt="" class="profile-img-in-description"
+				th:src="@{'/images/'+${user.imageURL}}">
+
+			<table class="table mt-2 table-sm table-bordered text-center">
+				<tbody>
+					<tr>
+						<th>ID</th>
+						<td th:text="${user.id}"></td>
+					</tr>
+					<tr>
+						<th>NAME</th>
+						<td th:text="${user.name}"></td>
+					</tr>
+					<tr>
+						<th>EMAIL</th>
+						<td th:text="${user.email}"></td>
+					</tr>
+					<tr>
+						<th>ROLE</th>
+						<td th:text="${user.role}"></td>
+					</tr>
+					
+					
+					<tr>
+						<td colspan="2"><textarea class="form-control"
+								readonly="readonly" rows="2" th:text="${user.about}"></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2"><button class="btn btn-sm-6 btn-danger">DELETE</button><button class="btn btn-sm-6 btn-success">UPDATE</button></td>
+						
+
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+
+
+		
+	</section>
+</body>
+</html>

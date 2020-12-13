@@ -43,5 +43,11 @@ public class UserController {
 	public String getAddContactForm() {
 		return "normaluserpages/add-contact-form";
 	}
+	
+	@RequestMapping("/profile")
+	public String getProfile() {
+	
+		return "normaluserpages/profile";
+	}
 
 }
